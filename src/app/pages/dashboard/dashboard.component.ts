@@ -17,12 +17,15 @@ export class DashboardComponent implements OnInit {
   public clicked2: boolean = false;
 
   cryptos: any;
+  blocks:any;
 
   constructor(
-    private web3Service: Web3Service
+    public web3Service: Web3Service
   ) {}
 
   ngOnInit() {
+
+    this.blocks = this.web3Service.blocks;
 
     var gradientChartOptionsConfigurationWithTooltipBlue: any = {
       maintainAspectRatio: false,

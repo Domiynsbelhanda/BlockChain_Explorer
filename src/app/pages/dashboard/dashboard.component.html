@@ -34,7 +34,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let bloc of web3Service.blocks">
+                <tr *ngFor="let bloc of blocks">
                   <td><a [routerLink]="['/block', bloc.number]" routerLinkActive="active">{{bloc.number}}</a></td>
                   <td>{{bloc.timestamp*1000 | date: 'HH:mm:ss'}}</td>
                   <td>{{bloc.miner}}</td>

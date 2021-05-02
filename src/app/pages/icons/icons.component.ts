@@ -11,8 +11,8 @@ import Web3 from "web3";
 export class IconsComponent implements OnInit {
 
   web3: Web3;
-  private transactionId: string;
-  private sub: any;
+  transactionId: string;
+  sub: any;
   tx: TransactionClass;
 
   constructor(

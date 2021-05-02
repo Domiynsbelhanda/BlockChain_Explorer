@@ -10,8 +10,8 @@ import {ActivatedRoute} from "@angular/router";
 export class MapComponent implements OnInit, OnDestroy  {
 
   web3: Web3;
-  private addressId: string;
-  private sub: any;
+  addressId: string;
+  sub: any;
   balance: any;
   balanceInEther: any;
 

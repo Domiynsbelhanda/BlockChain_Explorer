@@ -10,8 +10,8 @@ import {TransactionClass} from "../../services/transactions";
 })
 export class TablesComponent implements OnInit, OnDestroy {
   web3: Web3;
-  private blockId: number;
-  private sub: any;
+  blockId: number;
+  sub: any;
   block: BlockClass;
   transactions: Array<any> = [];
 
