@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import Web3 from 'web3';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
+import {Observable} from "rxjs";
+import {catchError, tap} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -15,17 +17,43 @@ export class Web3Service {
 
   data: any;
 
-  result:any;
+  btcBlock: any = [];
+
+  token: string;
 
 
   constructor(
     private _http: HttpClient
   ) {
+    this.token = '0bd88606587e4cc1b36c001685938b5c';
     this.web3 = new Web3(this.web3Provider);
     this.web3.eth.getBlockNumber()
       .then(numb => {
         this.processArray(numb);
       });
+
+    this.btcBlockchain().forEach((value)=> {
+      for (let i = 0; i < 10; i++){
+        this.btcInfos(value['height'] - i).forEach(
+          (values)=> {
+            const data = {
+              height: parseInt(value['height']) - i,
+              hash: values['hash'],
+              total: values['total'],
+              size: values['size'],
+              time: values['time'],
+              mrkl_root: values['mrkl_root'],
+              coinbase_addr: values['coinbase_addr'],
+              bits: values['bits'],
+              nonce: values['nonce'],
+              transactions: values['txids'].length,
+              txids: values['txids'],
+            }
+            this.btcBlock.push(data)
+          }
+        )
+      }
+    });
   }
 
   async processArray(num: number) {
@@ -43,11 +71,21 @@ export class Web3Service {
     cc.setApiKey('2854a5c3399c288c9183d204216c9c5d706e7d55bb64cd5a67eda10db684a574')
 
 // Basic Usage:
-    cc.priceHistorical('ETH', ['USD'], new Date(2021,5,2, 2,34))
+    cc.priceHistorical('ETH', ['USD'], new Date())
       .then(prices => {
-        console.log(prices)
-        // -> { BTC: { USD: 997, EUR: 948.17 } }
       })
       .catch(console.error)
+  }
+
+  btcBlockchain(){
+    return this._http.get('https://api.blockcypher.com/v1/btc/main?token='+this.token);
+  }
+
+  btcInfos(height){
+    return this._http.get('https://api.blockcypher.com/v1/btc/main/blocks/'+height+'?token='+this.token);
+  }
+
+  tx_Infos(hash){
+    return this._http.get('https://api.blockcypher.com/v1/btc/main/txs/'+hash+'?token='+this.token)
   }
 }

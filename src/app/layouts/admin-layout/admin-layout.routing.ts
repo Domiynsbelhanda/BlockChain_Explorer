@@ -14,7 +14,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "transaction/:id", component: IconsComponent },
   { path: "address/:id", component: MapComponent },
   { path: "btc", component: NotificationsComponent },
-  { path: "user", component: UserComponent },
+  { path: "btcblock/:id", component: UserComponent },
   { path: "block/:id", component: TablesComponent },
   { path: "typography", component: TypographyComponent },
   // { path: "rtl", component: RtlComponent }
